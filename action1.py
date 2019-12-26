@@ -6,14 +6,19 @@ import util
 
 
 def action(board, moves, size=8):
+    # 撃てる場所が1つしかない場合はそこに打つ
+    if len(moves) == 1:
+        return moves[0]
+
     centerPos = getCenter(board)
 
     minDistance = 0
     minDistanceIndex = 0
     returnMove = moves[0]
-    # init value
     for move in moves:
         distance = util.getDistance(move, centerPos)
+        if ignoreSideLine(board, moves, move):
+            continue
         if distance < minDistance:
             minDistance = distance
             returnMove = move
@@ -77,3 +82,46 @@ def sumMyPiece(board):
             if piece == 1:
                 myPiece = myPiece + 1
     return myPiece
+
+
+def ignoreSideLine(board, moves, move):
+    """盤の一番外側の列は有効てであることが多いので避ける
+
+    Args:
+       board 盤
+       moves 
+       move 
+
+    Returns:
+        bool
+
+    """
+
+    # movesの全てが外側の列であることがあるのでその場合はFalseを返す
+    count = 0
+    allIgnoreFlag = False
+    for move in moves:
+        boardSize = len(board)
+        count = count + 1
+        if move[0] != 0 and move[0] != (boardSize - 1):
+            allIgnoreFlag = True
+
+        if move[1] != 0 and move[1] != (boardSize - 1):
+            allIgnoreFlag = True
+
+        if allIgnoreFlag:
+            break
+
+    if count == len(moves):
+        return False
+    if not allIgnoreFlag:
+        return False
+
+    boardSize = len(board)
+    if move[0] == 0 or move[0] == (boardSize - 1):
+        return True
+
+    if move[1] == 0 or move[1] == (boardSize - 1):
+        return True
+
+    return False
