@@ -1,4 +1,5 @@
 import random
+import action1
 
 """
 引数について
@@ -10,7 +11,9 @@ moves:現在の合法手の一覧
 
 """
 
-def getAction(board,moves):
-	#渡されたMovesの中からランダムで返り値として返却する。
-	index = random.randrange(len(moves))
-	return moves[index]
+
+def getAction(board, moves):
+    return action1.action(board, moves)
+    # 渡されたMovesの中からランダムで返り値として返却する。
+    # index = random.randrange(len(moves))
+    # return moves[index]
