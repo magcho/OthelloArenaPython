@@ -11,17 +11,21 @@ def action(board, moves, size=8):
         return moves[0]
 
     centerPos = getCenter(board)
+    print("centerPos:", centerPos)
 
-    minDistance = 0
+    minDistance = 100
     minDistanceIndex = 0
     returnMove = moves[0]
     for move in moves:
         distance = util.getDistance(move, centerPos)
         if ignoreSideLine(board, moves, move):
+            print("ignore")
             continue
         if distance < minDistance:
             minDistance = distance
             returnMove = move
+
+    util.printMoves(board, moves, returnMove, centerPos)
     return returnMove
 
     # random
@@ -84,7 +88,7 @@ def sumMyPiece(board):
     return myPiece
 
 
-def ignoreSideLine(board, moves, move):
+def ignoreSideLine(board, moves, target):
     """盤の一番外側の列は有効てであることが多いので避ける
 
     Args:
@@ -96,32 +100,31 @@ def ignoreSideLine(board, moves, move):
         bool
 
     """
-
-    # movesの全てが外側の列であることがあるのでその場合はFalseを返す
-    count = 0
-    allIgnoreFlag = False
-    for move in moves:
-        boardSize = len(board)
-        count = count + 1
-        if move[0] != 0 and move[0] != (boardSize - 1):
-            allIgnoreFlag = True
-
-        if move[1] != 0 and move[1] != (boardSize - 1):
-            allIgnoreFlag = True
-
-        if allIgnoreFlag:
-            break
-
-    if count == len(moves):
-        return False
-    if not allIgnoreFlag:
-        return False
-
+    # sideではない場合はスキップしない
     boardSize = len(board)
-    if move[0] == 0 or move[0] == (boardSize - 1):
-        return True
+    if (
+        target[0] != 0
+        or target[0] != boardSize
+        or target[1] != 0
+        or target[1] != boardSize
+    ):
+        return False
 
-    if move[1] == 0 or move[1] == (boardSize - 1):
-        return True
+    # movesの全てが外側の列であることがあるのでその場合はスキップしない
+    count = 0
+    sideFlag = False
+    for move in moves:
+        if (move[0] == 0 and move[0] == (boardSize - 1)) or (
+            move[1] == 0 and move[1] == (boardSize - 1)
+        ):
+            sideFlag = True
+            count = count + 1
 
-    return False
+    # 全てがsideのケース
+    if sideFlag and count == len(moves):
+        print("全てがside")
+        return False
+
+    # side以外もある場合
+    print("side以外もある")
+    return True
