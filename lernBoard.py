@@ -29,12 +29,6 @@ def lern(board):
     #     [1, 1, 1, 1, 1, 1, 1, 0],
     # ]
 
-    board = [
-        [0, 1, 0, -1],
-        [1, 1, -1, 1],
-        [1, -1, 1, 1],
-        [-1, 0, -1, 1],
-    ]
     boardSize = len(board)
 
     moves = OthelloLogic.getMoves(board, 1, boardSize)
@@ -49,10 +43,10 @@ def lern(board):
 
     for move in moves:
         nextBoard = deepcopy(board)
-        util.printMoves(deepcopy(nextBoard), moves, move)
+        # util.printMoves(deepcopy(nextBoard), moves, move)
         OthelloLogic.execute(nextBoard, move, 1, boardSize)
-        print("execute root")
-        OthelloLogic.printBoard(deepcopy(nextBoard))
+        # print("execute root")
+        # OthelloLogic.printBoard(deepcopy(nextBoard))
         score = evalutionTree(deepcopy(nextBoard), -1, boardSize)
         results.append(score)
         if score > maxSocre:
@@ -63,38 +57,40 @@ def lern(board):
 
 
 def evalutionTree(board, player, boardSize, currentDepth=1):
-    print("evalutionTree")
+    # print("evalutionTree")
     # board = OthelloLogic.getReverseboard(board)
     moves = OthelloLogic.getMoves(board, player, boardSize)
     # pprint(board)
 
     scores = []
-    print("moves", len(moves))
     for move in moves:
-        util.printMoves(deepcopy(board), moves, move)
+        # util.printMoves(deepcopy(board), moves, move)
         nextBoard = deepcopy(board)
-        # if currentDepth % 2 == 1:
-        #     reversedBoard = deepcopy(nextBoard)
-        #     # OthelloLogic.getReverseboard(reversedBoard)
-        #     util.printMoves(reversedBoard, moves, move)
-        # else:
-        #     pass
-        #     util.printMoves(deepcopy(nextBoard), moves, move)
 
         OthelloLogic.execute(nextBoard, move, player, boardSize)
-        print("exec")
-        OthelloLogic.printBoard(deepcopy(nextBoard))
+        # print("exec")
+        # OthelloLogic.printBoard(deepcopy(nextBoard))
 
         if util.isGameEnd(nextBoard):
             currentPlayer = 1 if currentDepth % 2 == 1 else -1
             scores.append(util.getBoardScore(deepcopy(nextBoard), currentPlayer))
-            print(util.getBoardScore(deepcopy(nextBoard), currentPlayer))
         else:
-            evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
-    return 0
+            scores.append(
+                evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
+            )
+
+    pprint(board)
+    pprint(moves)
+    return util.average(scores)
 
 
-lern(None)
+board = [
+    [0, 1, 0, -1],
+    [0, 1, -1, 1],
+    [0, -1, 1, 1],
+    [-1, 0, -1, 1],
+]
+print(lern(board))
 # board = [
 #     [1, 1, 1, 1, 1, 1, 1, 1],
 #     [1, 1, 1, 1, 1, 1, 1, 0],

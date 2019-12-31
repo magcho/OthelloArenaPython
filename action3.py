@@ -1,5 +1,6 @@
 import OthelloLogic
 from pprint import pprint
+import lernBoard
 import util
 
 
@@ -14,27 +15,4 @@ def action(board, moves):
         move
 
     """
-
-    boardSize = len(board)
-
-    board = [
-        [-1, -1, -1, -1, -1, -1, -1, -1],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        # [-1, -1, 1, 1, -1, -1, -1, -1],
-        # [-1, 1, -1, -1, 1, -1, -1, -1],
-        # [-1, 1, -1, -1, -1, 1, -1, -1],
-        # [-1, -1, -1, -1, -1, -1, -1, -1],
-        # [-1, -1, 1, 1, 1, 1, 1, -1],
-        # [-1, -1, -1, 1, 1, -1, -1, 1],
-        # [1, 1, 1, 1, 1, 1, -1, 1],
-    ]
-
-    print(util.getBoardScore(board))
-
-    return moves[0]
+    return lernBoard.lern(board)
