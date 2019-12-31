@@ -78,7 +78,7 @@ def getBoardScore(board, player=1):
         点数
 
     """
-    if player == -1:
+    if player == 1:
         OthelloLogic.getReverseboard(board)
     myPieceCount = len([cell for line in board for cell in line if cell == 1])
     return 2 * myPieceCount - len(board) ** 2
