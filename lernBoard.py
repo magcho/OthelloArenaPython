@@ -2,6 +2,10 @@ import OthelloLogic
 from pprint import pprint
 import pdb
 from copy import deepcopy
+import sys
+
+# 再帰呼び出し上限
+sys.setrecursionlimit(10000)
 
 # user lib
 import util
@@ -18,23 +22,17 @@ def lern(board):
 
     """
 
-    # board = [
-    #     [1, 1, 1, 1, 1, 1, 1, 0],
-    #     [1, 1, 1, 1, 1, 1, 1, 0],
-    #     [1, 1, 1, 1, 1, 1, 1, 0],
-    #     [1, 1, 1, 1, 1, 1, 1, 1],
-    #     [1, 1, 1, 1, 1, 1, 1, -1],
-    #     [1, 1, 1, 1, 1, 1, 1, 1],
-    #     [1, 1, 1, 1, 1, 1, 1, 0],
-    #     [1, 1, 1, 1, 1, 1, 1, 0],
-    # ]
-
     boardSize = len(board)
 
     moves = OthelloLogic.getMoves(board, 1, boardSize)
     maxSocre = 0
     maxSocreMove = moves[0]
     results = []
+
+    # 最終手の場合探索を行わない
+    if util.getOnBoardPieces(board) == (boardSize ** 2) - 1:
+        moves = OthelloLogic.getMoves(board, 1, boardSize)
+        return moves[0]
 
     # 自分がパスで相手は打てる時
     if len(moves) == 0:
@@ -53,6 +51,7 @@ def lern(board):
             score = maxSocre
             maxSocreMove = move
 
+    print(results)
     return maxSocreMove
 
 
@@ -61,6 +60,10 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
     # board = OthelloLogic.getReverseboard(board)
     moves = OthelloLogic.getMoves(board, player, boardSize)
     # pprint(board)
+
+    # パスの時
+    if moves == []:
+        return evalutionTree(deepcopy(board), player * -1, boardSize)
 
     scores = []
     for move in moves:
@@ -78,19 +81,9 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
             scores.append(
                 evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
             )
-
-    pprint(board)
-    pprint(moves)
     return util.average(scores)
 
 
-board = [
-    [0, 1, 0, -1],
-    [0, 1, -1, 1],
-    [0, -1, 1, 1],
-    [-1, 0, -1, 1],
-]
-print(lern(board))
 # board = [
 #     [1, 1, 1, 1, 1, 1, 1, 1],
 #     [1, 1, 1, 1, 1, 1, 1, 0],

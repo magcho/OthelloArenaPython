@@ -152,3 +152,17 @@ def average(arr):
     """
 
     return sum(arr) / len(arr)
+
+
+def getOnBoardPieces(board):
+    """board上の駒の総数
+
+    Args:
+       board arg1
+
+    Returns:
+        int 駒の総数
+
+    """
+
+    return len([cell for line in board for cell in line if cell != 0])
