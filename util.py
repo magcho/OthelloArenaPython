@@ -23,7 +23,6 @@ def getDistance(piece1, piece2):
 
 
 def printMoves(board, moves, target=False, centerPos=False):
-    print("--------------------")
     """movesとmoveを表示する
 
     Args:
@@ -98,7 +97,6 @@ def isGameEnd(board):
     currentPiece = len([cell for line in board for cell in line if cell != 0])
     # 全てのマスが埋まった場合
     if currentPiece == boardSize ** 2:
-        print("全てのマスが埋まったので投了")
         return True
 
     # 最終手で最後の人マスを打てる場合
@@ -110,7 +108,6 @@ def isGameEnd(board):
     nextBoard = deepcopy(board)
     if OthelloLogic.getMoves(nextBoard, 1, boardSize) == []:
         if OthelloLogic.getMoves(nextBoard, -1, boardSize) == []:
-            print("双方積み、投了")
             return True
 
     return False
