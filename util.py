@@ -66,16 +66,20 @@ def printMoves(board, moves, target=False, centerPos=False):
         print(row)
 
 
-def getBoardScore(board):
+def getBoardScore(board, player=1):
     """完全に埋まったboardの点数を返す。
 
     Args:
        board 
+       player 1なら渡されたボードが自分のターンであることを表す、-1なら相手のターンでありboardが反転していること表す
+    
 
     Returns:
         点数
 
     """
+    if player == -1:
+        OthelloLogic.getReverseboard(board)
     myPieceCount = len([cell for line in board for cell in line if cell == 1])
     return 2 * myPieceCount - len(board) ** 2
 
@@ -94,20 +98,19 @@ def isGameEnd(board):
     currentPiece = len([cell for line in board for cell in line if cell != 0])
     # 全てのマスが埋まった場合
     if currentPiece == boardSize ** 2:
-        print(123)
+        print("全てのマスが埋まったので投了")
         return True
 
     # 最終手で最後の人マスを打てる場合
     if currentPiece == (boardSize ** 2) - 1:
         if OthelloLogic.getMoves(board, 1, boardSize) != []:
-            print(345)
             return False
 
     # 双方打つ手なし(互いにパス)
     nextBoard = deepcopy(board)
     if OthelloLogic.getMoves(nextBoard, 1, boardSize) == []:
         if OthelloLogic.getMoves(nextBoard, -1, boardSize) == []:
-            print(234)
+            print("双方積み、投了")
             return True
 
     return False
