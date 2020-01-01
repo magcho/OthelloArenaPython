@@ -25,9 +25,8 @@ def lern(board):
     boardSize = len(board)
 
     moves = OthelloLogic.getMoves(board, 1, boardSize)
-    maxSocre = 0
-    maxSocreMove = moves[0]
-    results = []
+    minScore = boardSize ** 2
+    minScoreMove = moves[0]
 
     # 最終手の場合探索を行わない
     if util.getOnBoardPieces(board) == (boardSize ** 2) - 1:
@@ -46,13 +45,11 @@ def lern(board):
         # print("execute root")
         # OthelloLogic.printBoard(deepcopy(nextBoard))
         score = evalutionTree(deepcopy(nextBoard), -1, boardSize)
-        results.append(score)
-        if score > maxSocre:
-            score = maxSocre
-            maxSocreMove = move
-
-    print(results)
-    return maxSocreMove
+        if score < minScore:
+            score = minScore
+            minScoreeMove = move
+    print(minScore)
+    return minScoreMove
 
 
 def evalutionTree(board, player, boardSize, currentDepth=1):
