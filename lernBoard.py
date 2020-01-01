@@ -3,12 +3,23 @@ from pprint import pprint
 import pdb
 from copy import deepcopy
 import sys
+from concurrent.futures import ProcessPoolExecutor
+from logging import StreamHandler, Formatter, INFO, getLogger
 
 # 再帰呼び出し上限
 sys.setrecursionlimit(10000)
 
 # user lib
 import util
+
+
+def init_logger():
+    handler = StreamHandler()
+    handler.setLevel(INFO)
+    handler.setFormatter(Formatter("[%(asctime)s] [%(threadName)s] %(message)s"))
+    logger = getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(INFO)
 
 
 def lern(board):
@@ -21,6 +32,7 @@ def lern(board):
 
 
     """
+    init_logger()
 
     boardSize = len(board)
 
@@ -34,22 +46,37 @@ def lern(board):
         return moves[0]
 
     # 自分がパスで相手は打てる時
+    if len(moves) == 1:
+        return moves[0]
     if len(moves) == 0:
         if util.isGameEnd(deepcopy(board)):
-            return False
+            return moves[0]
 
+    params = []
     for move in moves:
-        nextBoard = deepcopy(board)
-        # util.printMoves(deepcopy(nextBoard), moves, move)
-        OthelloLogic.execute(nextBoard, move, 1, boardSize)
-        # print("execute root")
-        # OthelloLogic.printBoard(deepcopy(nextBoard))
-        score = evalutionTree(deepcopy(nextBoard), -1, boardSize)
-        if score < minScore:
+        params.append((deepcopy(board), move, boardSize))
+
+    results = []
+    (max_workers, chunk_sizs, num_tasks, num_calc) = (2, 100, 10000, 1000)
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        for result in executor.map(evalFunc, params, chunksize=chunk_sizs):
+            results.append(result)
+
+    pprint(results)
+    for i in range(len(results) - 1):
+        if results[i] < minScore:
             score = minScore
-            minScoreeMove = move
+            minScoreMove = moves[i]
+
     print(minScore)
     return minScoreMove
+
+
+def evalFunc(params):
+    (board, move, boardSize) = params
+
+    OthelloLogic.execute(board, move, 1, boardSize)
+    return evalutionTree(board, -1, boardSize)
 
 
 def evalutionTree(board, player, boardSize, currentDepth=1):
