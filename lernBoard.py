@@ -57,6 +57,7 @@ def lern(board, moves):
     params = []
     for move in moves:
         params.append((deepcopy(board), move, boardSize))
+    pprint(params)
 
     results = []
     (max_workers, chunk_sizs, num_tasks, num_calc) = (2, 100, 10000, 1000)
@@ -114,6 +115,7 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
         if util.isGameEnd(nextBoard):
             currentPlayer = 1 if currentDepth % 2 == 1 else -1
             scores.append(util.getBoardScore(deepcopy(nextBoard), currentPlayer))
+            getLogger().info(currentDepth)
         else:
             scores.append(
                 evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
@@ -131,16 +133,16 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
 #     [1, 1, 1, 1, 1, 1, 1, -1],
 #     [1, 1, 1, 1, 1, 1, 1, 1],
 # ]
-board = [
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, -1, -1, -1, -1, -1, -1, 1],
-    [0, -1, -1, -1, 1, 1, -1, 1],
-    [1, -1, -1, 1, 1, 1, -1, 1],
-    [0, -1, -1, -1, 1, 1, -1, 1],
-    [0, 0, -1, -1, 1, 1, -1, 1],
-    [0, 0, 0, 0, 0, 0, 1, 1],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-]
+# board = [
+#     [0, 0, 0, 0, 0, 0, 0, 1],
+#     [0, -1, -1, -1, -1, -1, -1, 1],
+#     [0, -1, -1, -1, 1, 1, -1, 1],
+#     [1, -1, -1, 1, 1, 1, -1, 1],
+#     [0, -1, -1, -1, 1, 1, -1, 1],
+#     [0, 0, -1, -1, 1, 1, -1, 1],
+#     [0, 0, 0, 0, 0, 0, 1, 1],
+#     [0, 0, 0, 0, 0, 0, 0, 1],
+# ]
 # print(lern(board))
 
 # print(util.getBoardHash(board))
