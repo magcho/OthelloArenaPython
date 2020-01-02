@@ -138,7 +138,6 @@ def lern(board, moves):
     # maxScoreMove = moves[i]
 
     pprint(results)
-    print(minScore)
     pprint(moves)
     return minScoreMove
 
