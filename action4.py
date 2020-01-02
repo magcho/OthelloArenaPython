@@ -18,11 +18,9 @@ def action(board, moves):
         move
 
     """
-    OthelloLogic.printBoard(board)
-    pprint(board)
     lastPieceCount = (len(board) ** 2) - util.getOnBoardPieces(board)
 
-    if lastPieceCount > 0:
+    if lastPieceCount > 8:
         return center.action(board, moves)
         # return action1.action(board, moves)
     else:
@@ -35,19 +33,19 @@ def action(board, moves):
     #     return action1.action(board, moves)
 
 
-board = [
-    [0, 1, 1, 1, 1, 1, 1, 0],
-    [-1, -1, -1, -1, -1, -1, -1, 0],
-    [1, 1, 1, -1, 1, -1, 0, 1],
-    [1, 1, -1, 1, -1, -1, -1, 1],
-    [1, 1, -1, -1, 1, -1, 0, 1],
-    [-1, -1, -1, -1, 1, -1, 0, 0],
-    [-1, -1, -1, -1, -1, -1, 0, 0],
-    [0, -1, -1, -1, -1, -1, -1, 0],
-]
-OthelloLogic.printBoard(board)
-moves = OthelloLogic.getMoves(board, 1, 8)
-start = time.time()
-print(lernBoard.lern(board, moves))
-stop = time.time()
-print("%.3f seconds" % (stop - start))
+# board = [
+#     [0, 1, 1, 1, 1, 1, 1, 0],
+#     [-1, -1, -1, -1, -1, -1, -1, 0],
+#     [1, 1, 1, -1, 1, -1, 0, 1],
+#     [1, 1, -1, 1, -1, -1, -1, 1],
+#     [1, 1, -1, -1, 1, -1, 0, 1],
+#     [-1, -1, -1, -1, 1, -1, 0, 0],
+#     [-1, -1, -1, -1, -1, -1, 0, 0],
+#     [0, -1, -1, -1, -1, -1, -1, 0],
+# ]
+# OthelloLogic.printBoard(board)
+# moves = OthelloLogic.getMoves(board, 1, 8)
+# start = time.time()
+# print(lernBoard.lern(board, moves))
+# stop = time.time()
+# print("%.3f seconds" % (stop - start))
