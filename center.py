@@ -16,9 +16,18 @@ def action(board, moves):
         move 選択したmove
 
     """
+    pprint(moves)
+
+    # 確定マスではない辺はなるべく取りたい
+    sidePos = len(board) - 1
+    for move in moves:
+        if isCorner(board, move):
+            tmpL.append(move)
+        elif move[0] == 0 or move[0] == sidePos or move[1] == 0 or move[1] == sidePos:
+            if not isStaticPoint(board, move):
+                return move
 
     center = action1.getCenter(board)
-
     distances = []
     for move in moves:
         distances.append(
@@ -45,7 +54,7 @@ def action(board, moves):
     # 角はなるべくとらない
     tmpH = []
     tmpL = []
-    for i in range(len(moves)):
+    for move in moves:
         if isCorner(board, move):
             tmpL.append(move)
         else:
@@ -107,8 +116,6 @@ def isStaticPoint(board, _move):
     if not (move[0] == 0 or move[0] == sidePos or move[1] == 0 or move[1] == sidePos):
         return False
 
-    print(move)
-
     # 横辺
     if move[0] == 0 or move[0] == sidePos:
         # 左に走査して相手駒か空きがあれば左は確定でない
@@ -152,27 +159,27 @@ def isStaticPoint(board, _move):
     return False
 
 
-board = [
-    [1, 1, -1, 1, 1, 1, 1, 0],
-    [1, 1, -1, -1, 1, 1, -1, 0],
-    [1, 1, 1, 1, -1, -1, -1, -1],
-    [1, 1, 1, -1, -1, 1, -1, 0],
-    [1, 1, 1, 1, -1, 1, -1, 0],
-    [-1, -1, -1, -1, 1, -1, 0, 0],
-    [-1, -1, -1, -1, -1, 1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, 1, 1],
-]
+# board = [
+#     [1, 1, -1, 1, 1, 1, 1, 0],
+#     [1, 1, -1, -1, 1, 1, -1, 0],
+#     [1, 1, 1, 1, -1, -1, -1, -1],
+#     [1, 1, 1, -1, -1, 1, -1, 0],
+#     [1, 1, 1, 1, -1, 1, -1, 0],
+#     [-1, -1, -1, -1, 1, -1, 0, 0],
+#     [-1, -1, -1, -1, -1, 1, -1, 1],
+#     [-1, -1, -1, -1, -1, -1, 1, 1],
+# ]
 
-OthelloLogic.printBoard(board)
-
-moves = OthelloLogic.getMoves(board, 1, 8)
+# OthelloLogic.printBoard(board)
+# i
+# moves = OthelloLogic.getMoves(board, 1, 8)
 
 # print("----")
 # util.printMoves(deepcopy(board), moves)
 
 
-for move in moves:
-    print("---")
-    util.printMoves(deepcopy(board), moves, move)
-    print(move)
-    print(isStaticPoint(board, move))
+# for move in moves:
+#     print("---")
+#     util.printMoves(deepcopy(board), moves, move)
+#     print(move)
+#     print(isStaticPoint(board, move))
