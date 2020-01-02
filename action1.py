@@ -68,7 +68,8 @@ def getCenter(board):
         tmp = tmp + columnSum[i] * (i + 1)
     xCenter = (tmp / sumMyPiece(board)) - 1
 
-    return [int(xCenter), int(yCenter)]
+    # 四捨五入
+    return [round(xCenter), round(yCenter)]
 
 
 def sumMyPiece(board):

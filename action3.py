@@ -18,8 +18,8 @@ def action(board, moves):
     """
 
     # return lernBoard.lern(board)
-    if util.getOnBoardPieces(board) > (len(board) ** 2) - 16:
-        return lernBoard.lern(board)
+    if util.getOnBoardPieces(board) > (len(board) ** 2) - 0:
+        return lernBoard.lern(board, moves)
 
     else:
         return action1.action(board, moves)
