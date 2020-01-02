@@ -22,7 +22,7 @@ def init_logger():
     logger.setLevel(INFO)
 
 
-def lern(board):
+def lern(board, moves):
     """
 
     Args:
@@ -36,9 +36,11 @@ def lern(board):
 
     boardSize = len(board)
 
-    moves = OthelloLogic.getMoves(board, 1, boardSize)
+    # moves = OthelloLogic.getMoves(board, 1, boardSize)
     minScore = boardSize ** 2
     minScoreMove = moves[0]
+    maxScore = 0
+    maxScoreMove = moves[0]
 
     # 最終手の場合探索を行わない
     if util.getOnBoardPieces(board) == (boardSize ** 2) - 1:
@@ -63,12 +65,23 @@ def lern(board):
             results.append(result)
 
     pprint(results)
-    for i in range(len(results) - 1):
-        if results[i] < minScore:
-            score = minScore
+
+    # min
+    print(len(results))
+    for i in range(len(results)):
+        print(results[i], minScore)
+        if results[i] <= minScore:
+            minScore = results[i]
             minScoreMove = moves[i]
 
+    # max
+    # for i in range(len(results) - 1):
+    # if results[i] > maxScore:
+    # maxScore = results[i]
+    # maxScoreMove = moves[i]
+
     print(minScore)
+    pprint(moves)
     return minScoreMove
 
 
@@ -105,7 +118,7 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
             scores.append(
                 evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
             )
-    return util.average(scores)
+    return min(scores)
 
 
 # board = [
@@ -118,6 +131,17 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
 #     [1, 1, 1, 1, 1, 1, 1, -1],
 #     [1, 1, 1, 1, 1, 1, 1, 1],
 # ]
+board = [
+    [0, 0, 0, 0, 0, 0, 0, 1],
+    [0, -1, -1, -1, -1, -1, -1, 1],
+    [0, -1, -1, -1, 1, 1, -1, 1],
+    [1, -1, -1, 1, 1, 1, -1, 1],
+    [0, -1, -1, -1, 1, 1, -1, 1],
+    [0, 0, -1, -1, 1, 1, -1, 1],
+    [0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1],
+]
+# print(lern(board))
 
 # print(util.getBoardHash(board))
 # OthelloLogic.printBoard(board)
