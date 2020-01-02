@@ -22,7 +22,7 @@ def action(board, moves):
     sidePos = len(board) - 1
     for move in moves:
         if isCorner(board, move):
-            tmpL.append(move)
+            pass
         elif move[0] == 0 or move[0] == sidePos or move[1] == 0 or move[1] == sidePos:
             if not isStaticPoint(board, move):
                 return move
