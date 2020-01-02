@@ -1,10 +1,18 @@
 import OthelloLogic
 from pprint import pprint
-import pdb
+
+# import pdb
 from copy import deepcopy
+
 import sys
+
+# import os
+
 from concurrent.futures import ProcessPoolExecutor
 from logging import StreamHandler, Formatter, INFO, getLogger
+
+# from multiprocessing import Pool
+# import threading
 
 # 再帰呼び出し上限
 sys.setrecursionlimit(10000)
@@ -32,7 +40,7 @@ def lern(board, moves):
 
 
     """
-    init_logger()
+    # init_logger()
 
     boardSize = len(board)
 
@@ -57,20 +65,68 @@ def lern(board, moves):
     params = []
     for move in moves:
         params.append((deepcopy(board), move, boardSize))
-    pprint(params)
+    # pprint(params)
 
     results = []
-    (max_workers, chunk_sizs, num_tasks, num_calc) = (2, 100, 10000, 1000)
-    with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        for result in executor.map(evalFunc, params, chunksize=chunk_sizs):
-            results.append(result)
 
-    pprint(results)
+    # TYPE 9 78.072
+    with ProcessPoolExecutor() as executor:
+        results = list(executor.map(evalFunc, params))
+
+    # TYPe 8 76.085
+    # with ProcessPoolExecutor(max_workers=8) as executor:
+    #     results = list(executor.map(evalFunc, params))
+
+    # TYPE 7 80.120
+    # with ProcessPoolExecutor(max_workers=4) as executor:
+    #     results = list(executor.map(evalFunc, params))
+
+    # TYPE 6 77.393
+    # with ProcessPoolExecutor(max_workers=8) as executor:
+    #     for result in executor.map(evalFunc, params):
+    #         results.append(result)
+
+    # TYPE5 79.082
+    # (max_workers, chunk_sizs, num_tasks, num_calc) = (2, 100, 10000, 1000)
+    # with ProcessPoolExecutor(max_workers=4) as executor:
+    #     for result in executor.map(evalFunc, params):
+    #         results.append(result)
+
+    # TYPE0 189.294
+    # for param in params:
+    #     results.append(evalFunc(param))
+
+    # TYPE4 199.272
+    # threads = []
+    # for param in params:
+    #     thread = MyThread(param)
+    #     thread.start()
+    #     threads.append(thread)
+    # for th in threads:
+    #     th.join()
+    # for r in threads:
+    #     results.append(r.getResult())
+
+    # TYPE3 188.869
+    # (max_workers, chunk_sizs, num_tasks, num_calc) = (2, 100, 10000, 1000)
+    # with ProcessPoolExecutor(max_workers=max_workers) as executor:
+    #     for result in executor.map(evalFunc, params, chunksize=chunk_sizs):
+    #         results.append(result)
+
+    # TYPE2 80.166
+    # with Pool(processes=4) as pool:
+    #     results = pool.map(evalFunc, params)
+
+    # TYPE1 78.372
+    # pool = Pool(processes=4)
+    # results = pool.map(evalFunc, params)
+    # pool.close()
+    # pool.join()
+
+    # pprint(results)
 
     # min
-    print(len(results))
     for i in range(len(results)):
-        print(results[i], minScore)
         if results[i] <= minScore:
             minScore = results[i]
             minScoreMove = moves[i]
@@ -81,9 +137,23 @@ def lern(board, moves):
     # maxScore = results[i]
     # maxScoreMove = moves[i]
 
+    pprint(results)
     print(minScore)
     pprint(moves)
     return minScoreMove
+
+
+# class MyThread(threading.Thread):
+#     def __init__(self, param):
+#         super().__init__()
+#         (self.board, self.move, self.boardSize) = param
+
+#     def run(self):
+#         OthelloLogic.execute(self.board, self.move, 1, self.boardSize)
+#         self.result = evalutionTree(deepcopy(self.board), -1, self.boardSize)
+
+#     def getResult(self):
+#         return self.result
 
 
 def evalFunc(params):
@@ -115,7 +185,8 @@ def evalutionTree(board, player, boardSize, currentDepth=1):
         if util.isGameEnd(nextBoard):
             currentPlayer = 1 if currentDepth % 2 == 1 else -1
             scores.append(util.getBoardScore(deepcopy(nextBoard), currentPlayer))
-            getLogger().info(currentDepth)
+            # getLogger().info(currentDepth)
+            # getLogger().info("I am {}, pid {}".format(currentDepth, os.getpid()))
         else:
             scores.append(
                 evalutionTree(nextBoard, player * -1, boardSize, currentDepth + 1)
