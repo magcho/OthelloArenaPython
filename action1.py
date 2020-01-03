@@ -25,6 +25,7 @@ def action(board, moves, size=8):
             minDistance = distance
             returnMove = move
 
+    pprint(board)
     util.printMoves(board, moves, returnMove, centerPos)
     return returnMove
 
