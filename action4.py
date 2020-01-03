@@ -18,11 +18,9 @@ def action(board, moves):
         move
 
     """
-    OthelloLogic.printBoard(board)
-    pprint(board)
     lastPieceCount = (len(board) ** 2) - util.getOnBoardPieces(board)
 
-    if lastPieceCount > 0:
+    if lastPieceCount > 8:
         return center.action(board, moves)
         # return action1.action(board, moves)
     else:
