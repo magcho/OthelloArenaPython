@@ -35,19 +35,19 @@ def action(board, moves):
     #     return action1.action(board, moves)
 
 
-board = [
-    [0, 1, 1, 1, 1, 1, 1, 0],
-    [-1, -1, -1, -1, -1, -1, -1, 0],
-    [1, 1, 1, -1, 1, -1, 0, 1],
-    [1, 1, -1, 1, -1, -1, -1, 1],
-    [1, 1, -1, -1, 1, -1, 0, 1],
-    [-1, -1, -1, -1, 1, -1, 0, 0],
-    [-1, -1, -1, -1, -1, -1, 0, 0],
-    [0, -1, -1, -1, -1, -1, -1, 0],
-]
-OthelloLogic.printBoard(board)
-moves = OthelloLogic.getMoves(board, 1, 8)
-start = time.time()
-print(lernBoard.lern(board, moves))
-stop = time.time()
-print("%.3f seconds" % (stop - start))
+# board = [
+#     [0, 1, 1, 1, 1, 1, 1, 0],
+#     [-1, -1, -1, -1, -1, -1, -1, 0],
+#     [1, 1, 1, -1, 1, -1, 0, 1],
+#     [1, 1, -1, 1, -1, -1, -1, 1],
+#     [1, 1, -1, -1, 1, -1, 0, 1],
+#     [-1, -1, -1, -1, 1, -1, 0, 0],
+#     [-1, -1, -1, -1, -1, -1, 0, 0],
+#     [0, -1, -1, -1, -1, -1, -1, 0],
+# ]
+# OthelloLogic.printBoard(board)
+# moves = OthelloLogic.getMoves(board, 1, 8)
+# start = time.time()
+# print(lernBoard.lern(board, moves))
+# stop = time.time()
+# print("%.3f seconds" % (stop - start))
