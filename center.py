@@ -157,29 +157,3 @@ def isStaticPoint(board, _move):
             i += 1
 
     return False
-
-
-# board = [
-#     [1, 1, -1, 1, 1, 1, 1, 0],
-#     [1, 1, -1, -1, 1, 1, -1, 0],
-#     [1, 1, 1, 1, -1, -1, -1, -1],
-#     [1, 1, 1, -1, -1, 1, -1, 0],
-#     [1, 1, 1, 1, -1, 1, -1, 0],
-#     [-1, -1, -1, -1, 1, -1, 0, 0],
-#     [-1, -1, -1, -1, -1, 1, -1, 1],
-#     [-1, -1, -1, -1, -1, -1, 1, 1],
-# ]
-
-# OthelloLogic.printBoard(board)
-# i
-# moves = OthelloLogic.getMoves(board, 1, 8)
-
-# print("----")
-# util.printMoves(deepcopy(board), moves)
-
-
-# for move in moves:
-#     print("---")
-#     util.printMoves(deepcopy(board), moves, move)
-#     print(move)
-#     print(isStaticPoint(board, move))

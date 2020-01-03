@@ -29,10 +29,6 @@ def action(board, moves, size=8):
     util.printMoves(board, moves, returnMove, centerPos)
     return returnMove
 
-    # random
-    # index = random.randrange(len(moves))
-    # return moves[index]
-
 
 def getCenter(board):
     """自分の色の駒の重心の座標を返す

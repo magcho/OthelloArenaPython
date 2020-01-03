@@ -182,6 +182,4 @@ def main():
 
 if __name__ == "__main__":
     print("===== OTHELLO_BOT =====")
-    while True:
-        main()
-        time.sleep(10)
+    main()
