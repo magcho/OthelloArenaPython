@@ -118,42 +118,101 @@ def isStaticPoint(board, _move):
 
     # 横辺
     if move[0] == 0 or move[0] == sidePos:
+        # 置くと両端が相手駒になり隙間がない場合も確定マスになる
+        emptyFlag = False
         # 左に走査して相手駒か空きがあれば左は確定でない
         i = 1
         while True:
             if move[1] - i < 0:
                 return True
-            if board[move[0]][move[1] - i] != 1:
+
+            cell = board[move[0]][move[1] - i]
+            if cell == -1:
                 break
-            i += 1
+            elif cell == 0:
+                emptyFlag = True
+                break
+            else:
+                i += 1
 
         # 右に走査して相手駒が空きがあれば右は確定でない
         i = 1
         while True:
             if move[1] + i > sidePos:
                 return True
-            if board[move[0]][move[1] + i] != 1:
+
+            cell = board[move[0]][move[1] + i]
+            if cell == -1:
                 break
-            i += 1
+            elif cell == 0:
+                emptyFlag = True
+                break
+            else:
+                i += 1
+
+        if not emptyFlag:
+            return True
 
     # 縦辺
     if move[1] == 0 or move[1] == sidePos:
+        # 置くと両端が相手駒になり隙間がない場合も確定マスになる
+        emptyFlag = False
         # 上に走査して相手駒か空きがあれば上は確定でない
         i = 1
         while True:
             if move[0] - i < 0:
                 return True
-            if board[move[0] - i][move[1]] != 1:
+
+            cell = board[move[0] - i][move[1]]
+            if cell == -1:
                 break
-            i += 1
+            elif cell == 0:
+                emptyFlag = True
+                break
+            else:
+                i += 1
 
         # 下に走査して相手駒が空きがあれば下は確定でない
         i = 1
         while True:
             if move[0] + i == sidePos:
                 return True
-            if board[move[0] + i][move[1]] != 1:
+
+            cell = board[move[0] + i][move[1]]
+            if cell == -1:
                 break
-            i += 1
+            elif cell == 0:
+                emptyFlag = 0
+                break
+            else:
+                i += 1
+
+        if not emptyFlag:
+            return True
 
     return False
+
+
+# board = [
+#     [0, 1, -1, 1, 1, 1, 1, 0],
+#     [-1, 1, -1, -1, 1, 1, -1, 0],
+#     [0, -1, 1, 1, -1, -1, -1, -1],
+#     [1, 1, 1, -1, -1, 1, -1, 0],
+#     [1, 1, 1, 1, -1, 1, -1, 0],
+#     [1, -1, -1, -1, 1, -1, 0, 0],
+#     [-1, -1, -1, -1, -1, 1, -1, 1],
+#     [0, -1, -1, -1, -1, -1, 1, 1],
+# ]
+
+# OthelloLogic.printBoard(board)
+# moves = OthelloLogic.getMoves(board, 1, 8)
+
+# print("----")
+# util.printMoves(deepcopy(board), moves)
+
+
+# for move in moves:
+#     print("---")
+#     util.printMoves(deepcopy(board), moves, move)
+#     print(move)
+#     print(isStaticPoint(board, move))
