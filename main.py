@@ -16,8 +16,8 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 # Credential
 # E_MAIL = "example@example.com"
 # PASSWORD = "example1234"
-E_MAIL = "hoge1234@example.com"
-PASSWORD = "3$#7}2}?38^[&}^"
+E_MAIL = "fuga1234@example.com"
+PASSWORD = "nhaw34hit934t"
 
 # API Endpoint
 HOME_URL = "http://tdu-othello.xyz/home"

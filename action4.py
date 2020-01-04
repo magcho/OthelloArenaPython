@@ -19,6 +19,5 @@ def action(board, moves):
 
     if lastPieceCount > 8:
         return center.action(board, moves)
-
     else:
         return lernBoard.lern(board, moves)
