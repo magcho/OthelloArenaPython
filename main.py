@@ -174,7 +174,8 @@ def main():
         make_room(auth_info)
         time.sleep(1)  # Why are you in such a hurry?
         try:
-            import Play
+            # import Play
+            import PlayOriginal
         except:
             logging.info("[!] GAME OVER!")
 
@@ -188,4 +189,4 @@ if __name__ == "__main__":
             main()
         except requests.exceptions.ConnectionError as e:
             logging.error(e)
-            sleep(10)
+            time.sleep(10)
