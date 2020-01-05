@@ -168,8 +168,9 @@ def load_own_AI():
 
 
 def main():
+    auth_info = do_login()
     while True:  # It's f**kin buggy!!!
-        auth_info = do_login()
+        # auth_info = do_login()
         make_room(auth_info)
         time.sleep(1)  # Why are you in such a hurry?
         try:
@@ -182,4 +183,9 @@ def main():
 
 if __name__ == "__main__":
     print("===== OTHELLO_BOT =====")
-    main()
+    while True:
+        try:
+            main()
+        except requests.exceptions.ConnectionError as e:
+            logging.error(e)
+            sleep(10)
